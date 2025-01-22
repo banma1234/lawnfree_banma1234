@@ -1,5 +1,5 @@
 export function parseDate(DATE: Date) {
-  const year = DATE.getFullYear();
+  const year = String(DATE.getFullYear()).substr(2, 3);
   const month = leftPad(DATE.getMonth() + 1);
   const day = leftPad(DATE.getDate());
 
