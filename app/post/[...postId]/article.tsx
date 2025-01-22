@@ -1,20 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
-interface wow {
-  postId: number;
-  title: string;
-  uploadDate: string;
-}
-
-interface PostPost {
-  postInfo: wow;
-  content: string;
-}
+import { Post, PostInfo } from "@/app/types/post";
 
 export default function Article(props: { postId: number }) {
-  const [post, setContent] = useState<PostPost>();
+  const [post, setContent] = useState<Post>();
   const postId = props.postId;
 
   useEffect(() => {
