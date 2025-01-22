@@ -1,4 +1,4 @@
-import Article from "./article";
+import Article from "./components/article";
 
 export default async function Posts({
   params,
@@ -8,8 +8,8 @@ export default async function Posts({
   const { postId } = await params;
 
   return (
-    <main>
+    <article>
       <Article postId={Number(postId)} />
-    </main>
+    </article>
   );
 }
