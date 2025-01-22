@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { PostInfo } from "@/app/types/post";
+import { PostInfo } from "@/app/types/postType";
 
 interface PostState {
   posts: PostInfo[];
@@ -17,7 +17,7 @@ const usePostStore = create(
       addPost: (postInfo: PostInfo, content: string) => {
         localStorage.setItem(
           `post-${postInfo.postId}`,
-          JSON.stringify({ postInfo, content }),
+          JSON.stringify({ postInfo, content })
         );
         set((prev: PostState) => ({
           posts: [...prev.posts, postInfo],
@@ -29,8 +29,8 @@ const usePostStore = create(
         const posts = get().posts;
 
         const updatedPosts = posts
-          .filter(post => post.postId !== postId)
-          .map(post => {
+          .filter((post) => post.postId !== postId)
+          .map((post) => {
             const target = localStorage.getItem(`post-${post.postId}`);
 
             if (post.postId > postId && target) {
@@ -41,7 +41,7 @@ const usePostStore = create(
 
               localStorage.setItem(
                 `post-${updatedPost.postId}`,
-                JSON.stringify({ postInfo: updatedPost, content }),
+                JSON.stringify({ postInfo: updatedPost, content })
               );
               return updatedPost;
             }
@@ -54,10 +54,10 @@ const usePostStore = create(
       editPost: (postInfo, content) => {
         localStorage.setItem(
           `post-${postInfo.postId}`,
-          JSON.stringify({ postInfo, content }),
+          JSON.stringify({ postInfo, content })
         );
         set((prev: PostState) => ({
-          posts: prev.posts.map(post => {
+          posts: prev.posts.map((post) => {
             if (post.postId === postInfo.postId) {
               return postInfo;
             }
@@ -68,12 +68,13 @@ const usePostStore = create(
     }),
     {
       name: `postStore`,
-    },
-  ),
+    }
+  )
 );
 
-export const usePostState = () => usePostStore(state => state.posts);
+export const usePostState = () => usePostStore((state) => state.posts);
 
-export const usePostStateInput = () => usePostStore(state => state.addPost);
-export const usePostStateEdit = () => usePostStore(state => state.editPost);
-export const usePostStateRemove = () => usePostStore(state => state.removePost);
+export const usePostStateInput = () => usePostStore((state) => state.addPost);
+export const usePostStateEdit = () => usePostStore((state) => state.editPost);
+export const usePostStateRemove = () =>
+  usePostStore((state) => state.removePost);
