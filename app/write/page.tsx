@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   usePostState,
   usePostStateInput,
   usePostStateEdit,
 } from "../utils/hooks/store/usePostStore";
 import { parseDate } from "../utils/parseDate";
-import { Button, Input, Textarea } from "@/components/ui";
+import { toast } from "../utils/hooks/use-toast";
+import { Button, Input, Textarea } from "@/ui";
 
 export default function Write() {
   const [title, setTitle] = useState<string>("");
@@ -18,6 +19,7 @@ export default function Write() {
   const addPost = usePostStateInput();
   const editPost = usePostStateEdit();
 
+  const router = useRouter();
   const searchParams = useSearchParams().get("postid");
   const postLength = usePostState().length + 1;
   const isNewPost = searchParams ? false : true;
@@ -40,7 +42,7 @@ export default function Write() {
   useEffect(() => {
     if (!error.length) return;
 
-    alert(error);
+    toast({ variant: "destructive", title: `${error}` });
     setError("");
   }, [error]);
 
@@ -66,6 +68,9 @@ export default function Write() {
 
     setTitle("");
     setContent("");
+
+    toast({ title: "포스트 작성이 완료되었습니다" });
+    router.replace("/");
   };
 
   return (

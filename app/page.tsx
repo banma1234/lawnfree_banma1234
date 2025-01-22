@@ -1,14 +1,11 @@
-import PostTable from "./PostTable";
+import PostTable from "./components/PostTable";
 
 export default function Home() {
   return (
-    <div className="w-full flex flex-col items-center justify-center">
-      <h1>hi</h1>
-      <h1>hi</h1>
-      <h1>hi</h1>
-      <div>
+    <section className="flex flex-col items-center justify-center">
+      <div className="mt-20 lg:w-[700px] md:w-4/5">
         <PostTable />
       </div>
-    </div>
+    </section>
   );
 }
