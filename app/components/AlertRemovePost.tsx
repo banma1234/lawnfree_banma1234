@@ -11,6 +11,7 @@ import {
 } from "@/ui/shadCn/alert-dialog";
 import { toast } from "@/app/utils/hooks/use-toast";
 import { usePostStateRemove } from "@/app/utils/hooks/store/usePostStore";
+import { handleSVG } from "../utils/handleSVG";
 
 export default function AlertRemovePost(props: { postId: number }) {
   const removePostById = usePostStateRemove();
@@ -22,8 +23,8 @@ export default function AlertRemovePost(props: { postId: number }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <p>삭제</p>
+      <AlertDialogTrigger asChild className="ml-1.5 hover:text-stone-700">
+        {handleSVG("delete", "18")}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
