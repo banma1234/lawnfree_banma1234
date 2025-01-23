@@ -41,7 +41,7 @@ export default function PostTable() {
   }, [searchParams]);
 
   const searchEngine = (input: string) => {
-    let targetData = postState.filter(item => item.title.includes(input));
+    const targetData = postState.filter(item => item.title.includes(input));
 
     if (!targetData.length) {
       setLoadedPosts([]);

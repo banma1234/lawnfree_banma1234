@@ -27,7 +27,7 @@ export default function SearchBar() {
   return (
     <div className="flex">
       <div className="flex justify-center items-center pl-3 rounded-l-lg text-stone-400 bg-stone-100">
-        {handleSVG("search", "16")}
+        {handleSVG("SEARCH", "16")}
       </div>
       <Input
         type="search"

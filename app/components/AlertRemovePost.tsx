@@ -24,7 +24,7 @@ export default function AlertRemovePost(props: { postId: number }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild className="ml-1.5 hover:text-stone-700">
-        {handleSVG("delete", "18")}
+        {handleSVG("DELETE", "18")}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

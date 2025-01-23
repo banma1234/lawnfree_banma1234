@@ -12,7 +12,7 @@ export default function Home() {
           <SearchBar />
           <Link href={"/write"}>
             <Button className="bg-purple-600 hover:bg-purple-800">
-              {handleSVG("write", "18")} 글 작성
+              {handleSVG("WRITE", "18")} 글 작성
             </Button>
           </Link>
         </div>
