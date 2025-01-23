@@ -7,6 +7,7 @@ import {
   usePostStateInput,
   usePostStateEdit,
 } from "../utils/hooks/store/usePostStore";
+import { handleSVG } from "../utils/handleSVG";
 import { parseDate } from "../utils/parseDate";
 import { toast } from "../utils/hooks/use-toast";
 import { Button, Input, Textarea } from "@/ui";
@@ -74,12 +75,28 @@ export default function Write() {
   };
 
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{content}</p>
-      <Input value={title} onChange={e => setTitle(e.target.value)} />
-      <Textarea value={content} onChange={e => setContent(e.target.value)} />
-      <Button onClick={submitPost}>Click</Button>
+    <div className="md:w-3/5 sm:4/5 h-full mt-12 rounded-xl overflow-hidden text-stone-800">
+      <Input
+        type="text"
+        placeholder="제목을 입력하세요."
+        className="w-full h-auto text-3xl p-6 font-bold rounded-none whitespace-normal line-clamp-1 border-none focus-visible:ring-0 bg-stone-100"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
+      <Textarea
+        placeholder="내용을 입력하세요."
+        className="h-[480px] text-l border-dashed rounded-none border-t-purple-400 p-6 focus-visible:ring-0 resize-none bg-stone-100"
+        value={content}
+        onChange={e => setContent(e.target.value)}
+      />
+      <div className="flex justify-end mt-2">
+        <Button
+          className="w-[142px] h-[54px] text-xl rounded-xl bg-purple-600 hover:bg-purple-800"
+          onClick={submitPost}
+        >
+          {handleSVG("check", "30")} 작성 완료
+        </Button>
+      </div>
     </div>
   );
 }
