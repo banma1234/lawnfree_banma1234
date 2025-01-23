@@ -77,8 +77,8 @@ export default function Write() {
     <div>
       <h2>{title}</h2>
       <p>{content}</p>
-      <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-      <Textarea value={content} onChange={(e) => setContent(e.target.value)} />
+      <Input value={title} onChange={e => setTitle(e.target.value)} />
+      <Textarea value={content} onChange={e => setContent(e.target.value)} />
       <Button onClick={submitPost}>Click</Button>
     </div>
   );
