@@ -15,36 +15,42 @@ const usePostStore = create(
       posts: [],
 
       addPost: (postInfo: PostInfo, content: string) => {
-        localStorage.setItem(
-          `post-${postInfo.postId}`,
-          JSON.stringify({ postInfo, content })
-        );
+        const KEY = `post-${postInfo.postId}`;
+        const postValue = JSON.stringify({ postInfo, content });
+
+        localStorage.setItem(KEY, postValue);
+
         set((prev: PostState) => ({
           posts: [...prev.posts, postInfo],
         }));
       },
 
       removePost: (postId: number) => {
-        localStorage.removeItem(`post-${postId}`);
+        const KEY = `post-${postId}`;
         const posts = get().posts;
+
+        localStorage.removeItem(KEY);
 
         const updatedPosts = posts
           .filter((post) => post.postId !== postId)
           .map((post) => {
-            const target = localStorage.getItem(`post-${post.postId}`);
+            const targetKey = `post-${post.postId}`;
+            const targetPost = localStorage.getItem(targetKey);
 
-            if (post.postId > postId && target) {
-              localStorage.removeItem(`post-${post.postId}`);
+            if (post.postId > postId && targetPost) {
+              localStorage.removeItem(targetKey);
 
-              const { content } = JSON.parse(target);
+              const { content } = JSON.parse(targetPost);
               const updatedPost = { ...post, postId: post.postId - 1 };
 
               localStorage.setItem(
                 `post-${updatedPost.postId}`,
                 JSON.stringify({ postInfo: updatedPost, content })
               );
+
               return updatedPost;
             }
+
             return post;
           });
 
@@ -52,15 +58,15 @@ const usePostStore = create(
       },
 
       editPost: (postInfo, content) => {
-        localStorage.setItem(
-          `post-${postInfo.postId}`,
-          JSON.stringify({ postInfo, content })
-        );
+        const KEY = `post-${postInfo.postId}`;
+        const postValue = JSON.stringify({ postInfo, content });
+
+        localStorage.setItem(KEY, postValue);
+
         set((prev: PostState) => ({
           posts: prev.posts.map((post) => {
-            if (post.postId === postInfo.postId) {
-              return postInfo;
-            }
+            if (post.postId === postInfo.postId) return postInfo;
+
             return post;
           }),
         }));
