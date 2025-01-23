@@ -1,6 +1,21 @@
-export function handleSVG(type: string, size: string) {
+/**
+ * 사용할 수 있는 아이콘 구분자.
+ */
+type IconType = "DELETE" | "SEARCH" | "WRITE" | "CHECK";
+
+/**
+ * 입력값에 맞는 `SVG` 아이콘을 반환하는 함수. 사용 가능한 SVG 아이콘은 다음과 같다
+ * - `DELETE`
+ * - `SEARCH`
+ * - `WRITE`
+ * - `CHECK`
+ * @param type 출력할 아이콘을 구분하는 구분자
+ * @param size 출력할 아이콘의 크기
+ * @returns `SVG 아이콘`
+ */
+export function handleSVG(type: IconType, size: string) {
   switch (type) {
-    case "delete":
+    case "DELETE":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -14,21 +29,21 @@ export function handleSVG(type: string, size: string) {
         </svg>
       );
 
-    case "search":
+    case "SEARCH":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size}
           height={size}
           fill="currentColor"
-          className="bi bi-search"
+          className="bi bi-SEARCH"
           viewBox="0 0 16 16"
         >
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
         </svg>
       );
 
-    case "write":
+    case "WRITE":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,14 +61,14 @@ export function handleSVG(type: string, size: string) {
         </svg>
       );
 
-    case "check":
+    case "CHECK":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size}
           height={size}
           fill="currentColor"
-          className="bi bi-check-lg"
+          className="bi bi-CHECK-lg"
           viewBox="0 0 16 16"
         >
           <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
