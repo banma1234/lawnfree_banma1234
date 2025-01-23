@@ -56,7 +56,7 @@ export default function PostTable() {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
+        <TableRow className="bg-stone-50 border-stone-300">
           <TableHead className="w-[60px] text-center">id</TableHead>
           <TableHead className="text-center">제목</TableHead>
           <TableHead className="w-[80px] text-center">작성일</TableHead>
