@@ -13,10 +13,10 @@ import { toast } from "@/app/utils/hooks/use-toast";
 import { usePostStateRemove } from "@/app/utils/hooks/store/usePostStore";
 
 export default function AlertRemovePost(props: { postId: number }) {
-  const removePost = usePostStateRemove();
+  const removePostById = usePostStateRemove();
 
   const removeTargetPost = (postId: number) => {
-    removePost(postId);
+    removePostById(postId);
     toast({ title: "포스트가 삭제되었습니다" });
   };
 

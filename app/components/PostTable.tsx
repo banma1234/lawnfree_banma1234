@@ -23,7 +23,7 @@ export default function PostTable() {
     }
   }, [posts]);
 
-  if (!isLoading) return <SkelletonUi />;
+  if (!isLoading) return <Skeleton />;
   if (isLoading && !posts.length) return <PostNotFound />;
 
   return (
@@ -33,7 +33,6 @@ export default function PostTable() {
           <TableHead className="w-[60px] text-center">id</TableHead>
           <TableHead className="text-center">제목</TableHead>
           <TableHead className="w-[80px] text-center">작성일</TableHead>
-          <TableHead className="w-[50px]">수정</TableHead>
           <TableHead className="w-[50px]">삭제</TableHead>
         </TableRow>
       </TableHeader>
@@ -50,9 +49,6 @@ export default function PostTable() {
               </Link>
             </TableCell>
             <TableCell className="text-center">{post.uploadDate}</TableCell>
-            <TableCell className="w-[50px]">
-              <Link href={`/write?postid=${post.postId}`}>수정</Link>
-            </TableCell>
             <TableCell className="w-[50px] cursor-pointer">
               <AlertRemovePost postId={post.postId} />
             </TableCell>
@@ -63,14 +59,52 @@ export default function PostTable() {
   );
 }
 
-const SkelletonUi = () => {
-  return <div className="w-full h-full bg-black">haha</div>;
+const Skeleton = () => {
+  return (
+    <div className="w-full h-[500px] flex flex-col">
+      <TableHeadSkeleton />
+      <div className="w-full h-[37px] flex flex-col justify-between">
+        {[1, 2, 3, 4].map((item, i) => (
+          <div key={i} className="flex flex-row">
+            <div className="w-[60px] p-2">
+              <div className="bg-gray-200 rounded-md">&nbsp;</div>
+            </div>
+            <div className="w-[510px] p-2">
+              <div className="bg-gray-200 rounded-md">&nbsp;</div>
+            </div>
+            <div className="w-[80px] p-2">
+              <div className="bg-gray-200 rounded-md">&nbsp;</div>
+            </div>
+            <div className="w-[50px] p-2">
+              <div className="bg-gray-200 rounded-md">&nbsp;</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const PostNotFound = () => {
   return (
     <div>
+      <TableHeadSkeleton />
       <h1>아무것도 없다 임마</h1>
     </div>
+  );
+};
+
+const TableHeadSkeleton = () => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[60px] text-center">id</TableHead>
+          <TableHead className="text-center">제목</TableHead>
+          <TableHead className="w-[80px] text-center">작성일</TableHead>
+          <TableHead className="w-[50px]">삭제</TableHead>
+        </TableRow>
+      </TableHeader>
+    </Table>
   );
 };
