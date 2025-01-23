@@ -28,7 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} w-full h-full antialiased`}
       >
-        <main>{children}</main>
+        <main className="flex flex-col items-center justify-center text-stone-800">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>

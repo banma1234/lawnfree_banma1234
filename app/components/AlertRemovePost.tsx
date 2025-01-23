@@ -28,9 +28,7 @@ export default function AlertRemovePost(props: { postId: number }) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            정말로 해당 포스트를 삭제하시겠습니까?
-          </AlertDialogTitle>
+          <AlertDialogTitle>해당 포스트를 삭제하시겠습니까?</AlertDialogTitle>
           <AlertDialogDescription>
             삭제한 포스트는 다시 되돌릴 수 없습니다.
           </AlertDialogDescription>
@@ -38,6 +36,7 @@ export default function AlertRemovePost(props: { postId: number }) {
         <AlertDialogFooter>
           <AlertDialogCancel>취소</AlertDialogCancel>
           <AlertDialogAction
+            className="bg-purple-600 hover:bg-purple-800"
             onClick={() => {
               removeTargetPost(props.postId);
             }}
