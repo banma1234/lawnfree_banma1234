@@ -2,14 +2,12 @@ import PostTable from "./components/PostTable";
 import SearchBar from "./components/SearchBar";
 import { handleSVG } from "./utils/handleSVG";
 import { Button } from "@/ui";
-import PostFilter from "./components/PostFilter";
 import { Table, TableHead, TableHeader, TableRow } from "@/ui/shadCn/table";
 
 export default function Home() {
   return (
-    <section>
-      <div className="mt-20 lg:w-[700px] m:w-4/5 px-3">
-        <PostFilter />
+    <section className="w-full flex justify-center">
+      <div className="mt-20 max-w-[680px] w-full px-3">
         <menu className="flex flex-row w-full justify-end pb-3 gap-3">
           <SearchBar />
           <a href={"/write"}>

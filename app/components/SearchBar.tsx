@@ -24,7 +24,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex w-full justify-end">
       <div className="flex justify-center items-center pl-3 rounded-l-lg text-stone-400 bg-stone-100">
         {handleSVG("SEARCH", "16")}
       </div>

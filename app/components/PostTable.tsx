@@ -8,45 +8,21 @@ import Link from "next/link";
 import AlertRemovePost from "./AlertRemovePost";
 import { parseDate } from "../utils/parseDate";
 import { PostInfo } from "../types/postType";
-import { useFilterState } from "../utils/hooks/store/useFilterState";
-import sortByFilterOption from "./sortByfilterOption";
 
 export default function PostTable() {
   const [loadedPosts, setLoadedPosts] = useState<PostInfo[]>();
   const [isLoading, setIsLoading] = useState(false);
 
   const postState = usePostState();
-  const sortOption = useFilterState();
   const router = useRouter();
   const searchParams = useSearchParams().get("q");
 
   useEffect(() => {
     if (postState) {
       setIsLoading(true);
-      // setLoadedPosts(postState);
-      console.log("sortOption : ", sortOption);
-      const z = sortByFilterOption(postState, sortOption);
-
-      if (z) {
-        console.log("hmm");
-        setLoadedPosts(z);
-      }
+      setLoadedPosts(postState);
     }
   }, [postState]);
-
-  useEffect(() => {
-    if (!loadedPosts) {
-      return;
-    }
-    if (!loadedPosts.length) {
-      return;
-    }
-    const doTest = sortByFilterOption(postState, sortOption);
-    if (!doTest) return;
-    // console.log(JSON.stringify(doTest), "\n\n\ndamn\n\n\n");
-
-    setLoadedPosts(doTest);
-  }, [sortOption]);
 
   useEffect(() => {
     if (!searchParams) {
@@ -58,14 +34,9 @@ export default function PostTable() {
     searchEngine(searchParams);
   }, [searchParams]);
 
-  useEffect(() => {
-    console.log(JSON.stringify(loadedPosts));
-  }, [loadedPosts]);
-
   const searchEngine = (input: string) => {
     if (!loadedPosts) return;
 
-    console.log("searchEngine fucker");
     const targetData = loadedPosts.filter(post => post.title.includes(input));
 
     if (!targetData.length) {
@@ -89,7 +60,7 @@ export default function PostTable() {
             <TableCell>
               <Link
                 className="overflow-hidden whitespace-normal line-clamp-1 hover:underline"
-                href={`/post/${post.postId}`}
+                href={`/post/${post.title}/${post.postId}`}
               >
                 {post.title}
               </Link>
@@ -116,7 +87,7 @@ const Skeleton = () => {
             <div className="w-[60px] p-2">
               <div className="bg-stone-100 rounded-md">&nbsp;</div>
             </div>
-            <div className="w-[510px] p-2">
+            <div className="grow p-2">
               <div className="bg-stone-100 rounded-md">&nbsp;</div>
             </div>
             <div className="w-[80px] p-2">

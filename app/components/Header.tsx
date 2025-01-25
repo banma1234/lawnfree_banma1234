@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="w-full h-[32px] flex justify-start bg-purple-800">
+    <header className="w-full h-[40px] flex items-center justify-start py-3 pl-8 text-stone-100 bg-purple-800">
       <Link href="/">
-        <h1>Home</h1>
+        <h1>lawnfree blog</h1>
       </Link>
     </header>
   );

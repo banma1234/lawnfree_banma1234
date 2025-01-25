@@ -10,7 +10,6 @@ import {
 import { handleSVG } from "../utils/handleSVG";
 import { toast } from "../utils/hooks/use-toast";
 import { Button, Input, Textarea } from "@/ui";
-import { parseDate } from "../utils/parseDate";
 
 export default function Write() {
   const [title, setTitle] = useState<string>("");
@@ -75,7 +74,7 @@ export default function Write() {
   };
 
   return (
-    <div className="md:w-3/5 sm:4/5 h-full mt-12 rounded-xl overflow-hidden text-stone-800">
+    <div className="rounded-xl overflow-hidden text-stone-800">
       <Input
         type="text"
         placeholder="제목을 입력하세요."
