@@ -25,12 +25,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="w-full h-full" lang="en">
+    // 커스텀 스크롤바 스타일
+    <html
+      className="w-full h-full overflow-y-auto
+  [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+      lang="en"
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} w-full h-full antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} w-full antialiased`}
       >
         <Header />
-        <main className="flex flex-col items-center justify-center text-stone-800">
+        <main className="h-full flex flex-col items-center text-stone-800">
           {children}
         </main>
         <Toaster />
