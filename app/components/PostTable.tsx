@@ -14,7 +14,7 @@ import Image from "next/image";
 /**
  * 게시물 전체 `목록`을 반환하는 컴포넌트
  */
-export default function PostTable() {
+function PostTableView() {
   const [loadedPosts, setLoadedPosts] = useState<PostInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,34 +70,40 @@ export default function PostTable() {
   if (isLoading && !loadedPosts.length) return <PostNotFound />;
 
   return (
-    <Suspense fallback={<Skeleton />}>
-      <Table className="w-full">
-        <TableBody>
-          {loadedPosts.map((post) => (
-            <TableRow key={post.postId}>
-              <TableCell className="w-[60px] text-center">
-                {post.postId}
-              </TableCell>
-              <TableCell>
-                <Link
-                  className="overflow-hidden whitespace-normal line-clamp-1 hover:underline"
-                  href={`/post/${post.title}/${post.postId}`}
-                >
-                  {post.title}
-                </Link>
-              </TableCell>
-              <TableCell className="text-center w-[80px]">
-                {post.uploadDate}
-              </TableCell>
-              <TableCell className="w-[50px] cursor-pointer">
-                <AlertRemovePost postId={post.postId}>
-                  {handleSVG("DELETE", "18")}
-                </AlertRemovePost>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <Table className="w-full">
+      <TableBody>
+        {loadedPosts.map((post) => (
+          <TableRow key={post.postId}>
+            <TableCell className="w-[60px] text-center">
+              {post.postId}
+            </TableCell>
+            <TableCell>
+              <Link
+                className="overflow-hidden whitespace-normal line-clamp-1 hover:underline"
+                href={`/post/${post.title}/${post.postId}`}
+              >
+                {post.title}
+              </Link>
+            </TableCell>
+            <TableCell className="text-center w-[80px]">
+              {post.uploadDate}
+            </TableCell>
+            <TableCell className="w-[50px] cursor-pointer">
+              <AlertRemovePost postId={post.postId}>
+                {handleSVG("DELETE", "18")}
+              </AlertRemovePost>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+
+export default function PostTable() {
+  return (
+    <Suspense fallback={<SkeletonUiTable />}>
+      <PostTableView />
     </Suspense>
   );
 }
@@ -105,7 +111,7 @@ export default function PostTable() {
 /**
  * 메인화면 로딩중 나타나는 스켈레톤 ui
  */
-const Skeleton = () => {
+const SkeletonUiTable = () => {
   return (
     <div className="w-full h-[500px] flex flex-col">
       <div className="w-full h-[37px] flex flex-col justify-between">
