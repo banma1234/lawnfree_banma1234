@@ -73,4 +73,51 @@ $ pnpm run start
 
 <br/>
 
-## state-management
+## 📚 state-management
+
+`zustand`를 활용한 상태관리 로직을 구성하였습니다. zustand를 선택한 이유는 다음과 같습니다.
+
+- 빠르고 간단하게 관련 기능을 구현할 수 있습니다. `Redux`, `ContextApi`에 비해 더 가볍고 적은 코드구성으로 상태관리 로직을 구성할 수 있습니다.
+- store의 특정 메소드를 `분할`, `사용`하여 불필요한 랜더링이 발생하지 않습니다.
+- `hooks`의 형태로 이용 가능해 편리합니다.
+
+<br/>
+
+각 기능들을 분할하여 각각 호출할 수 있기 때문에 `단일 store`로 로직을 구성하였습니다. store의 구성은 다음과 같습니다.
+
+```typescript
+// utils/hooks/store/usePostStore.ts
+
+/**
+ * 포스트를 전역으로 관리하는 state store. 제공하는 기능은 다음과 같다.
+ * - `posts` : 포스트 `목록` 반환
+ * - `addPost` : 포스트 `신규 작성`
+ * - `removePost` : 포스트 `삭제`
+ * - `editPost` : 포스트 `수정`
+ */
+interface PostState {
+  posts: PostInfo[];
+  addPost: (postInfo: PostInfo, content: string) => void;
+  removePost: (postId: number) => void;
+  editPost: (postInfo: PostInfo, content: string) => void;
+}
+```
+
+각각의 메소드가 서로 다른 `custom-hooks`로 분할되어 쓰임에 맞게 호출되는 구조입니다.
+
+```typescript
+/** @returns 포스트 `목록` 반환 */
+export const usePostState = () => usePostStore((state) => state.posts);
+
+/** @returns 신규 포스트 `추가`하는 `메소드` 반환 */
+export const usePostStateInput = () => usePostStore((state) => state.addPost);
+/** @returns 대상 포스트 `수정`하는 `메소드` 반환 */
+export const usePostStateEdit = () => usePostStore((state) => state.editPost);
+/** @returns 대상 포스트 `삭제`하는 `메소드` 반환 */
+export const usePostStateRemove = () =>
+  usePostStore((state) => state.removePost);
+```
+
+<br/>
+
+### posts[]
