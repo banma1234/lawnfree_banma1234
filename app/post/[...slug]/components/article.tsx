@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import { Post } from "@/app/types/postType";
 import { toast } from "@/app/utils/hooks/use-toast";
 
-export default function Article(props: { postId: number }) {
+export default function Article(props: { slug: string[] }) {
   const [post, setContent] = useState<Post>();
   const [error, setError] = useState("");
-  const postId = props.postId;
+  const [title, postId] = props.slug;
 
   useEffect(() => {
     if (!error.length) return;
