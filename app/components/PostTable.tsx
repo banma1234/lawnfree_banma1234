@@ -37,7 +37,7 @@ export default function PostTable() {
   const searchEngine = (input: string) => {
     if (!loadedPosts) return;
 
-    const targetData = loadedPosts.filter(post => post.title.includes(input));
+    let targetData = postState.filter(item => item.title.includes(input));
 
     if (!targetData.length) {
       setLoadedPosts([]);
@@ -50,7 +50,7 @@ export default function PostTable() {
   if (isLoading && !loadedPosts.length) return <PostNotFound />;
 
   return (
-    <Table>
+    <Table className="w-full">
       <TableBody>
         {loadedPosts.map(post => (
           <TableRow key={post.postId}>
@@ -93,7 +93,7 @@ const Skeleton = () => {
             <div className="w-[80px] p-2">
               <div className="bg-stone-100 rounded-md">&nbsp;</div>
             </div>
-            <div className="w-[50px] p-2">
+            <div className="w-[50px] py-2 px-3">
               <div className="bg-stone-100 rounded-md">&nbsp;</div>
             </div>
           </div>
