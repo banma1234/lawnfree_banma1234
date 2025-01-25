@@ -69,7 +69,9 @@ $ pnpm run start
 
 활용한 `shadCn` 컴포넌트는 다음과 같습니다.
 
-![대충 사진]()
+![Image](https://github.com/user-attachments/assets/56f1a9f5-3df8-4c37-bdd2-b9a75c1295cb)
+
+일부 컴포넌트는 컴포넌트를 직접 수정하여 사용하였습니다.
 
 <br/>
 
@@ -105,7 +107,7 @@ interface PostState {
 
 각각의 메소드가 서로 다른 `custom-hooks`로 분할되어 쓰임에 맞게 호출되는 구조입니다.
 
-```typescript
+```tsx
 /** @returns 포스트 `목록` 반환 */
 export const usePostState = () => usePostStore((state) => state.posts);
 
@@ -121,3 +123,49 @@ export const usePostStateRemove = () =>
 <br/>
 
 ### posts[]
+
+배열 형태의 저장소 입니다. 포스트의 정보 `postInfo`를 저장합니다.
+
+```typescript
+export interface PostInfo {
+  postId: number;
+  title: string;
+  uploadDate: string;
+}
+```
+
+postInfo는 `content`. 즉 포스트의 실제 `내용`을 제외한 정보 객체입니다.
+
+페이지에서 포스트의 `전체 목록`을 출력하거나 `라우팅`, `검색어 필터` 등에 사용할 때에는 가장 큰 용량의 content는 필요 없기 때문입니다. 때문에 `content`는 별도의 `localStorage` 공간에 `postId`를 key로 하여 보관합니다.
+
+```tsx
+addPost: (postInfo: PostInfo, content: string) => {
+    const KEY = `post-${postInfo.postId}`;
+    const postValue = JSON.stringify({ postInfo, content });
+
+    // 포스트의 `content`를 localhost에 저장
+    localStorage.setItem(KEY, postValue);
+
+    // `postInfo` 저장
+    set((prev: PostState) => ({
+        posts: [...prev.posts, postInfo],
+    }));
+},
+
+```
+
+<br/>
+
+```typescript
+const usePostStore = create(
+  persist<PostState>(
+    //            ~~~~~~~           //
+    //            ~~~~~~~           //
+    {
+      name: `postStore`,
+    }
+  )
+);
+```
+
+postInfo는 state로써 `store`에 저장되는 것 외에도 DB가 없는 환겨에서 데이터 영구 보존을 위해 `persist`를 활용해 `postStore`라는 localhost 저장소에 content와는 분리하여 따로 저장합니다.
