@@ -18,11 +18,10 @@ function PostTableView() {
   const [loadedPosts, setLoadedPosts] = useState<PostInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  /** 검색어 쿼리스트링 */
   const searchParams = useSearchParams().get("q");
   const postState = usePostState();
   const router = useRouter();
-  /** 검색어 쿼리값 */
-  // const searchParams = useSearchParams().get("q");
 
   /**
    * 데이터 로딩
