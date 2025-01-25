@@ -2,19 +2,18 @@
 
 import { Input } from "@/ui";
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { handleSVG } from "../utils/handleSVG";
 
 export default function SearchBar() {
   const [input, setInput] = useState<string>("");
 
   const router = useRouter();
-  const searchParams = useSearchParams().get("q");
   const focusPoint = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (focusPoint.current) focusPoint.current.focus();
-  }, [focusPoint, searchParams]);
+  }, [focusPoint]);
 
   useEffect(() => {
     searchByInputData(input);

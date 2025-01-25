@@ -4,7 +4,6 @@ import { Input } from "./shadCn/input";
 import { Toast } from "./shadCn/toast";
 import { Toaster } from "./shadCn/toaster";
 import { Textarea } from "./shadCn/textarea";
-import { Select } from "./shadCn/select";
 
 const Components = {
   Button,
@@ -13,9 +12,8 @@ const Components = {
   Toast,
   Toaster,
   Textarea,
-  Select,
 };
 
 export default Components;
 
-export { Button, Card, Input, Toast, Toaster, Textarea, Select };
+export { Button, Card, Input, Toast, Toaster, Textarea };

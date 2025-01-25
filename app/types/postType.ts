@@ -1,7 +1,7 @@
 export interface PostInfo {
   postId: number;
   title: string;
-  uploadDate: string;
+  uploadDate: Date;
 }
 
 export interface Post {

@@ -4,9 +4,11 @@
  * @returns `YY-MM-DD`로 변환된 `string`값 반환
  */
 export function parseDate(DATE: Date) {
-  const year = String(DATE.getFullYear()).substr(2, 3);
-  const month = leftPad(DATE.getMonth() + 1);
-  const day = leftPad(DATE.getDate());
+  const targetDate = new Date(DATE);
+
+  const year = String(targetDate.getFullYear()).substr(2, 3);
+  const month = leftPad(targetDate.getMonth() + 1);
+  const day = leftPad(targetDate.getDate());
 
   return [year, month, day].join("-");
 }

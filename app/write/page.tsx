@@ -8,9 +8,9 @@ import {
   usePostStateEdit,
 } from "../utils/hooks/store/usePostStore";
 import { handleSVG } from "../utils/handleSVG";
-import { parseDate } from "../utils/parseDate";
 import { toast } from "../utils/hooks/use-toast";
 import { Button, Input, Textarea } from "@/ui";
+import { parseDate } from "../utils/parseDate";
 
 export default function Write() {
   const [title, setTitle] = useState<string>("");
@@ -58,7 +58,7 @@ export default function Write() {
     const postInfo = {
       postId: isNewPost ? postLength : Number(searchParams),
       title,
-      uploadDate: parseDate(new Date()),
+      uploadDate: new Date(),
     };
 
     if (!isNewPost) {
@@ -94,7 +94,7 @@ export default function Write() {
           className="w-[142px] h-[54px] text-xl rounded-xl bg-purple-600 hover:bg-purple-800"
           onClick={submitPost}
         >
-          {handleSVG("check", "30")} 작성 완료
+          {handleSVG("CHECK", "30")} 작성 완료
         </Button>
       </div>
     </div>

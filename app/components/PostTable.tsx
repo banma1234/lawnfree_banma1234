@@ -1,34 +1,52 @@
 "use client";
 
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from "@/ui/shadCn/table";
+import { Table, TableBody, TableRow, TableCell } from "@/ui/shadCn/table";
 import { usePostState } from "../utils/hooks/store/usePostStore";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AlertRemovePost from "./AlertRemovePost";
+import { parseDate } from "../utils/parseDate";
 import { PostInfo } from "../types/postType";
+import { useFilterState } from "../utils/hooks/store/useFilterState";
+import sortByFilterOption from "./sortByfilterOption";
 
 export default function PostTable() {
   const [loadedPosts, setLoadedPosts] = useState<PostInfo[]>();
   const [isLoading, setIsLoading] = useState(false);
 
   const postState = usePostState();
+  const sortOption = useFilterState();
   const router = useRouter();
   const searchParams = useSearchParams().get("q");
 
   useEffect(() => {
     if (postState) {
       setIsLoading(true);
-      setLoadedPosts(postState);
+      // setLoadedPosts(postState);
+      console.log("sortOption : ", sortOption);
+      const z = sortByFilterOption(postState, sortOption);
+
+      if (z) {
+        console.log("hmm");
+        setLoadedPosts(z);
+      }
     }
   }, [postState]);
+
+  useEffect(() => {
+    if (!loadedPosts) {
+      return;
+    }
+    if (!loadedPosts.length) {
+      return;
+    }
+    const doTest = sortByFilterOption(postState, sortOption);
+    if (!doTest) return;
+    // console.log(JSON.stringify(doTest), "\n\n\ndamn\n\n\n");
+
+    setLoadedPosts(doTest);
+  }, [sortOption]);
 
   useEffect(() => {
     if (!searchParams) {
@@ -40,8 +58,15 @@ export default function PostTable() {
     searchEngine(searchParams);
   }, [searchParams]);
 
+  useEffect(() => {
+    console.log(JSON.stringify(loadedPosts));
+  }, [loadedPosts]);
+
   const searchEngine = (input: string) => {
-    const targetData = postState.filter(item => item.title.includes(input));
+    if (!loadedPosts) return;
+
+    console.log("searchEngine fucker");
+    const targetData = loadedPosts.filter(post => post.title.includes(input));
 
     if (!targetData.length) {
       setLoadedPosts([]);
@@ -55,18 +80,12 @@ export default function PostTable() {
 
   return (
     <Table>
-      <TableHeader>
-        <TableRow className="bg-stone-50 border-stone-300">
-          <TableHead className="w-[60px] text-center">id</TableHead>
-          <TableHead className="text-center">제목</TableHead>
-          <TableHead className="w-[80px] text-center">작성일</TableHead>
-          <TableHead className="w-[50px]">삭제</TableHead>
-        </TableRow>
-      </TableHeader>
       <TableBody>
         {loadedPosts.map(post => (
           <TableRow key={post.postId}>
-            <TableCell className="text-center">{post.postId}</TableCell>
+            <TableCell className="w-[60px] text-center">
+              {post.postId}
+            </TableCell>
             <TableCell>
               <Link
                 className="overflow-hidden whitespace-normal line-clamp-1 hover:underline"
@@ -75,7 +94,9 @@ export default function PostTable() {
                 {post.title}
               </Link>
             </TableCell>
-            <TableCell className="text-center">{post.uploadDate}</TableCell>
+            <TableCell className="text-center w-[80px]">
+              {parseDate(post.uploadDate)}
+            </TableCell>
             <TableCell className="w-[50px] cursor-pointer">
               <AlertRemovePost postId={post.postId} />
             </TableCell>
@@ -89,7 +110,6 @@ export default function PostTable() {
 const Skeleton = () => {
   return (
     <div className="w-full h-[500px] flex flex-col">
-      <TableHeadSkeleton />
       <div className="w-full h-[37px] flex flex-col justify-between">
         {[1, 2, 3, 4].map((item, i) => (
           <div key={i} className="flex flex-row">
@@ -115,23 +135,7 @@ const Skeleton = () => {
 const PostNotFound = () => {
   return (
     <div>
-      <TableHeadSkeleton />
       <h1>아무것도 없다 임마</h1>
     </div>
-  );
-};
-
-const TableHeadSkeleton = () => {
-  return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[60px] text-center">id</TableHead>
-          <TableHead className="text-center">제목</TableHead>
-          <TableHead className="w-[80px] text-center">작성일</TableHead>
-          <TableHead className="w-[50px]">삭제</TableHead>
-        </TableRow>
-      </TableHeader>
-    </Table>
   );
 };
