@@ -3,6 +3,7 @@
 > ## Contact
 >
 > **tel.** 010-8606-6857
+>
 > **mail.** banma1234@gmail.com
 
 <br/>
@@ -168,4 +169,4 @@ const usePostStore = create(
 );
 ```
 
-postInfo는 state로써 `store`에 저장되는 것 외에도 DB가 없는 환겨에서 데이터 영구 보존을 위해 `persist`를 활용해 `postStore`라는 localhost 저장소에 content와는 분리하여 따로 저장합니다.
+postInfo는 state로써 `store`에 저장되는 것 외에도 DB가 없는 환경에서 데이터 영구 보존을 목적으로 `persist`를 활용해 `postStore`라는 localhost 저장소에 content와는 분리하여 따로 저장합니다.
