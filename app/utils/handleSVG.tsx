@@ -1,7 +1,14 @@
 /**
  * 사용할 수 있는 아이콘 구분자.
  */
-type IconType = "DELETE" | "SEARCH" | "WRITE" | "CHECK";
+type IconType =
+  | "DELETE"
+  | "SEARCH"
+  | "WRITE"
+  | "CHECK"
+  | "DROPDOWN"
+  | "ARROW_LEFT"
+  | "ARROW_RIGHT";
 
 /**
  * 입력값에 맞는 `SVG` 아이콘을 반환하는 함수. 사용 가능한 SVG 아이콘은 다음과 같다
@@ -9,6 +16,7 @@ type IconType = "DELETE" | "SEARCH" | "WRITE" | "CHECK";
  * - `SEARCH`
  * - `WRITE`
  * - `CHECK`
+ * - `DROPDOWN`
  * @param type 출력할 아이콘을 구분하는 구분자
  * @param size 출력할 아이콘의 크기
  * @returns `SVG 아이콘`
@@ -72,6 +80,54 @@ export function handleSVG(type: IconType, size: string) {
           viewBox="0 0 16 16"
         >
           <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+        </svg>
+      );
+
+    case "DROPDOWN":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={size}
+          height={size}
+          fill="currentColor"
+          className="bi bi-three-dots-vertical"
+          viewBox="0 0 16 16"
+        >
+          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+        </svg>
+      );
+
+    case "ARROW_LEFT":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={size}
+          height={size}
+          fill="currentColor"
+          className="bi bi-arrow-left-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fillRule="evenodd"
+            d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+          />
+        </svg>
+      );
+
+    case "ARROW_RIGHT":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={size}
+          height={size}
+          fill="currentColor"
+          className="bi bi-arrow-right-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fillRule="evenodd"
+            d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"
+          />
         </svg>
       );
   }
