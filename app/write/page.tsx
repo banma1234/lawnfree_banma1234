@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { parseDate } from "../utils/parseDate";
 import { handleSVG } from "../utils/handleSVG";
@@ -13,9 +13,9 @@ import {
 } from "../utils/hooks/store/usePostStore";
 
 /**
- * 게시글 `작성`/`수정` 페이지
+ * 게시글 `작성`/`수정` 페이지. next.js 정책으로 인해 Suspense로 감싸줌
  */
-export default function Write() {
+function Write() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [error, setError] = useState("");
@@ -122,3 +122,27 @@ export default function Write() {
     </div>
   );
 }
+
+/**
+ * `Suspense` 래퍼
+ */
+const WritePost = () => {
+  return (
+    <Suspense fallback={<SkeletonUiWrite />}>
+      <Write />
+    </Suspense>
+  );
+};
+
+/**
+ * `Write` 페이지 스켈레톤 ui
+ */
+const SkeletonUiWrite = () => {
+  return (
+    <div className="w-full h-full rounded-xl overflow-hidden bg-stone-1200">
+      &nbsp;
+    </div>
+  );
+};
+
+export default WritePost;

@@ -2,10 +2,11 @@
 
 import { Table, TableBody, TableRow, TableCell } from "@/ui/shadCn/table";
 import { usePostState } from "../utils/hooks/store/usePostStore";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { handleSVG } from "../utils/handleSVG";
 import { PostInfo } from "../types/postType";
-import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import AlertRemovePost from "./AlertRemovePost";
 import Image from "next/image";
@@ -17,10 +18,11 @@ export default function PostTable() {
   const [loadedPosts, setLoadedPosts] = useState<PostInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const searchParams = useSearchParams().get("q");
   const postState = usePostState();
   const router = useRouter();
   /** 검색어 쿼리값 */
-  const searchParams = useSearchParams().get("q");
+  // const searchParams = useSearchParams().get("q");
 
   /**
    * 데이터 로딩
@@ -64,39 +66,39 @@ export default function PostTable() {
     }
   };
 
-  // 로딩중일 경우 스켈레톤 ui 반환
-  if (!isLoading) return <Skeleton />;
   // 로딩은 완료됬으나 포스트가 없는 경우 notfound 반환
   if (isLoading && !loadedPosts.length) return <PostNotFound />;
 
   return (
-    <Table className="w-full">
-      <TableBody>
-        {loadedPosts.map((post) => (
-          <TableRow key={post.postId}>
-            <TableCell className="w-[60px] text-center">
-              {post.postId}
-            </TableCell>
-            <TableCell>
-              <Link
-                className="overflow-hidden whitespace-normal line-clamp-1 hover:underline"
-                href={`/post/${post.title}/${post.postId}`}
-              >
-                {post.title}
-              </Link>
-            </TableCell>
-            <TableCell className="text-center w-[80px]">
-              {post.uploadDate}
-            </TableCell>
-            <TableCell className="w-[50px] cursor-pointer">
-              <AlertRemovePost postId={post.postId}>
-                {handleSVG("DELETE", "18")}
-              </AlertRemovePost>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <Suspense fallback={<Skeleton />}>
+      <Table className="w-full">
+        <TableBody>
+          {loadedPosts.map((post) => (
+            <TableRow key={post.postId}>
+              <TableCell className="w-[60px] text-center">
+                {post.postId}
+              </TableCell>
+              <TableCell>
+                <Link
+                  className="overflow-hidden whitespace-normal line-clamp-1 hover:underline"
+                  href={`/post/${post.title}/${post.postId}`}
+                >
+                  {post.title}
+                </Link>
+              </TableCell>
+              <TableCell className="text-center w-[80px]">
+                {post.uploadDate}
+              </TableCell>
+              <TableCell className="w-[50px] cursor-pointer">
+                <AlertRemovePost postId={post.postId}>
+                  {handleSVG("DELETE", "18")}
+                </AlertRemovePost>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Suspense>
   );
 }
 

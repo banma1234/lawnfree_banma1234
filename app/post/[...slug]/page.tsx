@@ -1,16 +1,11 @@
-import Article from "./components/Article";
+import Article from "./components/article";
 import NavContainer from "./components/NavContainer";
-import type { Metadata } from "next";
+//import type { Metadata } from "next";
 
-/**
- * 포스트 `상세보기` 페이지. 각 페이지를 `동적`으로 라우팅
- */
-export default async function Posts({
-  params,
-}: {
-  params: { slug: string[] };
-}) {
-  const { slug } = await params;
+export type paramsType = Promise<{ slug: string[] }>;
+
+export default async function Post(props: { params: paramsType }) {
+  const { slug } = await props.params;
 
   return (
     <section className="w-full max-w-[860px] p-6">
@@ -22,19 +17,15 @@ export default async function Posts({
   );
 }
 
-/**
- * 포스트의 각 상세 페이지를 `동적`으로 라우팅
- * @param params 동적 라우팅 params
- * @returns `meta 데이터`
- */
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string[] };
-}): Promise<Metadata> {
-  const [title] = (await params).slug;
+// /**
+//  * 포스트의 각 상세 페이지를 `동적`으로 라우팅
+//  * @param params 동적 라우팅 params
+//  * @returns `meta 데이터`
+//  */
+export async function generateMetadata(props: { params: paramsType }) {
+  const { slug } = await props.params;
 
   return {
-    title: `${decodeURI(title)}`,
+    title: `${decodeURI(slug[1])}`,
   };
 }

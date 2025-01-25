@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans_KR } from "next/font/google";
 import { Toaster } from "@/ui";
 import Header from "./components/Header";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const myFont = Noto_Sans_KR({
+  weight: ["400"],
   subsets: ["latin"],
+  fallback: ["-apple-system", "Apple SD Gothic Neo", "Roboto", "sans-serif"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
+
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "lawnfree 블로그 | 박범수",
@@ -37,9 +43,7 @@ export default function RootLayout({
   dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
       lang="en"
     >
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} w-full antialiased`}
-      >
+      <body className={`${myFont.className} w-full antialiased`}>
         <Header />
         <main className="h-full flex flex-col items-center text-stone-800">
           {children}

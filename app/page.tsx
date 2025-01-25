@@ -1,27 +1,32 @@
+"use client";
+
 import PostTable from "./components/PostTable";
 import SearchBar from "./components/SearchBar";
 import { handleSVG } from "./utils/handleSVG";
 import { Button } from "@/ui";
 import { Table, TableHead, TableHeader, TableRow } from "@/ui/shadCn/table";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <section className="w-full flex justify-center">
-      <div className="mt-20 max-w-[700px] w-full px-3">
-        <menu className="flex flex-row w-full justify-end pb-3 gap-3">
-          {/* 검색창 컴포넌트 */}
-          <SearchBar />
-          <a href={"/write"}>
-            <Button className="bg-purple-600 hover:bg-purple-800">
-              {handleSVG("WRITE", "18")} 글 작성
-            </Button>
-          </a>
-        </menu>
-        {/* TableHead 정적 컴포넌트로 작성 */}
-        <StaticTableHead />
-        <PostTable />
-      </div>
-    </section>
+    <Suspense>
+      <section className="w-full flex justify-center">
+        <div className="mt-20 max-w-[700px] w-full px-3">
+          <menu className="flex flex-row w-full justify-end pb-3 gap-3">
+            {/* 검색창 컴포넌트 */}
+            <SearchBar />
+            <a href={"/write"}>
+              <Button className="bg-purple-600 hover:bg-purple-800">
+                {handleSVG("WRITE", "18")} 글 작성
+              </Button>
+            </a>
+          </menu>
+          {/* TableHead 정적 컴포넌트로 작성 */}
+          <StaticTableHead />
+          <PostTable />
+        </div>
+      </section>
+    </Suspense>
   );
 }
 
